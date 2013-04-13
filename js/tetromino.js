@@ -1,7 +1,12 @@
-function Tretomino(coordinates){
+function Tretomino(coordinates, color){
   this.coordinates = coordinates;
+  this.color       = color || 'black';
+
+  // Game size will be 500px
+  this.BLOCK_SIZE  = 50 // in px
 }
 
+// Class methods
 Tretomino.all = [
   new Tretomino([[0,0], [1,0], [2,0], [3, 0]]), // xxxx
   new Tretomino([[0,0], [0,1], [1,1], [2, 1]]), // Lxx
@@ -14,4 +19,41 @@ Tretomino.all = [
 
 Tretomino.random = function(){
   return Tretomino.all[_.random(Tretomino.all.length - 1)]
+}
+
+// Instance methods
+function makeSVG(tag, attrs) {
+  var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (var k in attrs)
+    el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+
+Tretomino.prototype.toSVG = function(){
+  var svgNS = "http://www.w3.org/2000/svg";
+  var svg   =  makeSVG('svg', { xmlns: svgNS, version: '1.1' })
+  var i     = 0;
+  var point = null;
+  var rect  = null;
+  var attrs = null;
+
+
+  for(; i < this.coordinates.length; ++i){
+    point = this.coordinates[i];
+
+    attrs = {
+      x:      point[0] * this.BLOCK_SIZE,
+      y:      point[1] * this.BLOCK_SIZE, 
+      style:  "fill:blue;stroke:black;stroke-width:5",
+      width:  this.BLOCK_SIZE,
+      height: this.BLOCK_SIZE
+    }
+
+    rect = makeSVG('rect', attrs);
+
+    svg.appendChild(rect);
+  }
+
+  return svg;
 }

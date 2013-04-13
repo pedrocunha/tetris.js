@@ -1,0 +1,12 @@
+body {
+  height: 600px;
+  text-align: center;
+}
+
+.gamescreen {
+  background: red;
+  display: inline-block;
+  width: 500px;
+  height: 100%;
+  position: relative;
+}
