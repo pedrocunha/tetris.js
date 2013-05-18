@@ -21,6 +21,27 @@ describe("Tetromino", function() {
     })
   })
 
+  describe("#clone", function(){
+    var clone;
+    
+    beforeEach(function(){
+      tetromino = new Tetromino([0], 'pink')
+      clone     = tetromino.clone();
+    })
+
+    it("copies coordinates", function(){
+      expect(clone.coordinates).toEqual([0])
+    })
+
+    it("copies color", function(){
+      expect(clone.color).toEqual('pink')
+    })
+
+    it("doesnt return self", function(){
+      expect(clone).not.toBe(tetromino)
+    })
+  })
+
   describe("#toSVG", function(){
     var svg;
 
