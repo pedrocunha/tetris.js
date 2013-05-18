@@ -32,7 +32,7 @@ function makeSVG(tag, attrs) {
 
 Tetromino.prototype.toSVG = function(){
   var svgNS = "http://www.w3.org/2000/svg";
-  var svg   =  makeSVG('svg', { xmlns: svgNS, version: '1.1' })
+  var svg   = makeSVG('svg', { xmlns: svgNS, version: '1.1' })
   var i     = 0;
   var point = null;
   var rect  = null;
