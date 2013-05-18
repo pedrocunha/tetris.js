@@ -1,8 +1,8 @@
-describe("Tretomino", function() {
+describe("Tetromino", function() {
   var tretomino;
 
   beforeEach(function() {
-    tretomino = new Tretomino([]);
+    tretomino = new Tetromino([]);
   });
 
   it("allows access to its composition", function(){
@@ -11,13 +11,13 @@ describe("Tretomino", function() {
 
   describe(".all", function(){
     it("has all 7 combinations", function(){
-      expect(Tretomino.all.length).toEqual(7)
+      expect(Tetromino.all.length).toEqual(7)
     })
   });
 
   describe(".random", function(){
-    it("returns a random Tretomino", function(){
-      expect(Tretomino.random()).toEqual(jasmine.any(Object))
+    it("returns a random Tetromino", function(){
+      expect(Tetromino.random()).toEqual(jasmine.any(Object))
     })
   })
 
@@ -25,7 +25,7 @@ describe("Tretomino", function() {
     var svg;
 
     beforeEach(function(){
-      svg = Tretomino.all[0].toSVG();
+      svg = Tetromino.all[0].toSVG();
     })
 
     it("returns a svg with the correct namespace", function(){

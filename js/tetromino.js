@@ -1,4 +1,4 @@
-function Tretomino(coordinates, color){
+function Tetromino(coordinates, color){
   this.coordinates = coordinates;
   this.color       = color || 'black';
 
@@ -7,18 +7,18 @@ function Tretomino(coordinates, color){
 }
 
 // Class methods
-Tretomino.all = [
-  new Tretomino([[0,0], [1,0], [2,0], [3, 0]]), // xxxx
-  new Tretomino([[0,0], [0,1], [1,1], [2, 1]]), // Lxx
-  new Tretomino([[0,2], [0,1], [1,1], [2, 1]]), // xxJ
-  new Tretomino([[0,0], [1,0], [1,0], [1, 1]]), // xx
-  new Tretomino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
-  new Tretomino([[1,0], [0,1], [1,1], [2, 1]]), // oxo/xxx
-  new Tretomino([[0,0], [1,0], [1,1], [1, 2]]) // xxo/oxx
+Tetromino.all = [
+  new Tetromino([[0,0], [1,0], [2,0], [3, 0]]), // xxxx
+  new Tetromino([[0,0], [0,1], [1,1], [2, 1]]), // xoo/xxx
+  new Tetromino([[0,2], [0,1], [1,1], [2, 1]]), // xxJ
+  new Tetromino([[0,0], [1,0], [1,0], [1, 1]]), // xx
+  new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
+  new Tetromino([[1,0], [0,1], [1,1], [2, 1]]), // oxo/xxx
+  new Tetromino([[0,0], [1,0], [1,1], [1, 2]])  // xxo/oxx
 ]
 
-Tretomino.random = function(){
-  return Tretomino.all[_.random(Tretomino.all.length - 1)]
+Tetromino.random = function(){
+  return Tetromino.all[_.random(Tetromino.all.length - 1)]
 }
 
 // Instance methods
@@ -30,7 +30,7 @@ function makeSVG(tag, attrs) {
 }
 
 
-Tretomino.prototype.toSVG = function(){
+Tetromino.prototype.toSVG = function(){
   var svgNS = "http://www.w3.org/2000/svg";
   var svg   =  makeSVG('svg', { xmlns: svgNS, version: '1.1' })
   var i     = 0;
