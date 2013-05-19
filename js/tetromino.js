@@ -51,6 +51,10 @@ Tetromino.prototype = {
     return this.grid[0].length
   },
 
+  height: function(){
+    return this.grid.length
+  },
+
   _initializeGrid: function(){
     var i        = 0,
         j        = 0

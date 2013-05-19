@@ -84,4 +84,11 @@ describe("Tetromino", function() {
       expect(tetromino.width()).toEqual(3)
     })
   })
+
+  describe ("#height", function(){
+    it("returns 2 as height if its 2 row wide", function(){
+      tetromino = new Tetromino([[0,0], [1,0], [1,0], [1, 1]]), // xx/xx
+      expect(tetromino.height()).toEqual(2)
+    })
+  })
 });
