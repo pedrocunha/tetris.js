@@ -28,7 +28,7 @@ Game.prototype = {
     var i               = 0,
         j               = 0,
         futureY         = this.currentY + 1,
-        tetrominoHeight = this.currentTetromino.height()
+        tetrominoHeight = this.currentTetromino.height(),
         tetrominoWidth  = this.currentTetromino.width()
 
     for(i = 0; i < tetrominoWidth; ++i){
