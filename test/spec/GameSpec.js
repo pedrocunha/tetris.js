@@ -84,6 +84,117 @@ describe("Game", function() {
     })
   })
 
+  describe("#moveRight", function(){
+    var tetromino;
+
+    beforeEach(function(){
+      tetromino = new Tetromino([[0,0], [0,1], [1,1], [2, 1]]) // xoo/xxx
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it("returns true when can move to the right", function(){
+      expect(game.moveRight()).toBe(true)
+    })
+
+    it("returns false if can not move to the right", function(){
+      game.moveDown()
+      game.moveRight(); // - - - - X X X - - -
+      game.moveRight(); // - - - - - X X X - - 
+      game.moveRight(); // - - - - - - X X X - 
+      expect(game.moveRight()).toBe(true); 
+      expect(game.moveRight()).toBe(false); 
+    })
+
+    it("moves the whole tetromino", function(){
+      game.moveDown()
+      game.moveDown();
+      game.moveRight();
+
+      // - - - - X - - - - -
+      // - - - - X X X - - - 
+      expect(game.grid[0][3]).toBe(null);
+      expect(game.grid[0][4]).not.toBe(null);
+      expect(game.grid[0][5]).toBe(null);
+      expect(game.grid[0][6]).toBe(null);
+      expect(game.grid[0][7]).toBe(null);
+
+      expect(game.grid[1][3]).toBe(null);
+      expect(game.grid[1][4]).not.toBe(null);
+      expect(game.grid[1][5]).not.toBe(null);
+      expect(game.grid[1][6]).not.toBe(null);
+      expect(game.grid[1][7]).toBe(null);
+    })
+
+    it("moves to the right till gets to a complex tetromino", function(){
+      game.grid[0][6] = 1
+      game.grid[0][7] = 1
+      game.grid[1][7] = 1
+
+      game.moveDown()
+      game.moveDown();
+      // - - - X - - 1 1 - -
+      // - - - X X X - 1 - -
+
+      expect(game.moveRight()).toBe(true)
+      // - - - - X - 1 1 - -
+      // - - - - X X X 1 - -
+
+      expect(game.moveRight()).toBe(false)
+    })
+
+    it("moves to the right till gets to a complex tetromino (case 2)", function(){
+      game.grid[0][6] = 1
+      game.grid[0][7] = 1
+      game.grid[0][8] = 1
+      game.grid[0][9] = 1
+      game.grid[1][9] = 1
+
+      game.moveDown()
+      game.moveDown();
+      // - - - X - - 1 1 1 1
+      // - - - X X X - - - 1
+
+      expect(game.moveRight()).toBe(true)
+      // - - - - X - 1 1 1 1
+      // - - - - X X X - - 1
+
+      expect(game.moveRight()).toBe(true)
+      // - - - - - X 1 1 1 1
+      // - - - - - X X X - 1
+
+      expect(game.moveRight()).toBe(false)
+    })
+
+    it("returns false if can not move to the right due to a block", function(){
+      game.grid[0][6] = 1
+      game.grid[1][6] = 1
+
+      game.moveDown();
+      game.moveDown();
+      
+      // - - - X - - 1 - - -
+      // - - - X X X 1 - - - 
+      expect(game.moveRight()).toBe(false)
+    })
+
+    it("returns true when its still vertically outside of the grid but still horizontally inside", function(){
+      expect(game.moveRight()).toBe(true)
+    })
+
+    it("returns false when its vertically outside but at the right edge of the grid", function(){
+      game.moveRight();
+      game.moveRight();
+      game.moveRight();
+      expect(game.moveRight()).toBe(true);
+
+      //               X X X
+      // - - - - - - - - - -
+
+      expect(game.moveRight()).toBe(false);
+    })
+  })
+
   describe('#lineIsEmpty', function(){
     beforeEach(function(){
       game = new Game();

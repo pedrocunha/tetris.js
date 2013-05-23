@@ -45,43 +45,12 @@ Game.prototype = {
     // All is fine! We can move the tetromino down
     // Easiest algorithm is just to remove any references to
     // the Tetromino and put it back in
-    //
-    // Search algorithm goes bottom-up
-    var found = false;
-    for(i = this.currentY; i >= 0; --i){
-      for(j = 0; j < Game.HORIZONTAL_SPACES; ++j){
-        
-        if(this.grid[i][j] == this.currentTetromino){
-          this.grid[i][j] = null
-          found = true
-        }
-      }
-
-      // When going up if one row has no occurrences
-      // of a particular tetromino means the next up
-      // can't have either. So we break earlier
-      if(!found)
-        break
-      else
-        found = false
-    }
+    this._removeCurrentTetromino();
 
     // Put the tetromino back in
     this.currentY = futureY
-    var updateY   = this.currentY
+    this._placeCurrentTetromino();
 
-    for(i = tetrominoHeight - 1; i >= 0; --i){
-      for(j = 0; j < tetrominoWidth; ++j){
-        if(this.currentTetromino.grid[i][j] == 1)
-          // currentY should be inclusive
-          this.grid[updateY][this.currentX + j] = this.currentTetromino
-      }
-      --updateY
-
-      if ( updateY < 0 )
-        break
-
-    }
     return true
   },
 
@@ -89,6 +58,52 @@ Game.prototype = {
   },
 
   moveRight: function(){
+    var i = 0,
+        j = 0,
+        w = 0,
+        lastXBlock = 0,
+        nextXBlock = 0
+
+    var tetrominoHeight = this.currentTetromino.height();
+    var tetrominoWidth  = this.currentTetromino.width();
+    
+    // Return as early as possible if block at edge of
+    // grid
+    if ( tetrominoHeight <= this.currentY && this.currentX + tetrominoWidth - 1 == Game.HORIZONTAL_SPACES - 1)
+      return false
+
+    // If block outside of grid on
+    // top allow movement as long is still inside
+    // the horizontal spaces
+    if ( this.currentY < 0)
+      if ( this.currentX + tetrominoWidth < Game.HORIZONTAL_SPACES ){
+        this.currentX = this.currentX + 1
+        return true
+      }
+      else 
+        return false
+
+    // Check first if blocks to the right are available
+    for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0, j >= 0; --i, --j ){
+      // Get last block filled in
+      for ( w = 0; w < tetrominoWidth; ++w ){
+        if(this.currentTetromino.grid[i][w] == 1 )
+          lastXBlock = w
+      }
+
+      nextXBlock = lastXBlock + this.currentX + 1
+      if ( this.grid[j][nextXBlock] != null || nextXBlock == Game.HORIZONTAL_SPACES)
+        return false
+    }
+
+    // Clean block from the grid
+    this._removeCurrentTetromino();
+
+    // Put back in
+    this.currentX = this.currentX + 1
+    this._placeCurrentTetromino();
+
+    return true
   },
 
   start: function(options){
@@ -110,6 +125,48 @@ Game.prototype = {
     for(; i < this.grid[row].length; ++i){
       if( this.grid[row][i] != null )
         return false
+    }
+    return true
+  },
+
+  _removeCurrentTetromino: function(){
+    // Search algorithm goes bottom-up
+    var found = false;
+    for(var i = this.currentY; i >= 0; --i){
+      for(var j = 0; j < Game.HORIZONTAL_SPACES; ++j){
+        
+        if(this.grid[i][j] == this.currentTetromino){
+          this.grid[i][j] = null
+          found = true
+        }
+      }
+
+      // When going up if one row has no occurrences
+      // of a particular tetromino means the next up
+      // can't have either. So we break earlier
+      if(!found)
+        break
+      else
+        found = false
+    }
+  },
+
+  _placeCurrentTetromino: function(){
+    var updateY         = this.currentY
+    var tetrominoHeight = this.currentTetromino.height();
+    var tetrominoWidth  = this.currentTetromino.width();
+
+    for(var i = tetrominoHeight - 1; i >= 0; --i){
+      for(var j = 0; j < tetrominoWidth; ++j){
+        if(this.currentTetromino.grid[i][j] == 1)
+          // currentY should be inclusive
+          this.grid[updateY][this.currentX + j] = this.currentTetromino
+      }
+      --updateY
+
+      if ( updateY < 0 )
+        break
+
     }
     return true
   }
