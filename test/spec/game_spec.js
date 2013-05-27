@@ -195,6 +195,97 @@ describe('Game', function() {
     })
   })
 
+  describe('#moveLeft', function(){
+    var tetromino;
+
+    beforeEach(function(){
+      tetromino = new Tetromino([[2,0], [0,1], [1,1], [2, 1]]), // oox/xxx
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it('can always move once to the left on the beginning', function(){
+      expect(game.moveLeft()).toBe(true)
+    })
+
+    it('moves to the left till it reaches the wall', function(){
+      game.moveDown()
+      game.moveLeft();                    // - - X X X - - - - -
+      game.moveLeft();                    // - X X X - - - - - - 
+      expect(game.moveLeft()).toBe(true); // X X X - - - - - - -
+      expect(game.moveLeft()).toBe(false); 
+    })
+
+    it('moves the whole tetromino', function(){
+      game.moveDown()
+      game.moveDown();
+      game.moveLeft();
+
+      // - - - - X - - - - -
+      // - - X X X - - - - -
+      expect(game.grid[0][1]).toBe(null);
+      expect(game.grid[0][2]).toBe(null);
+      expect(game.grid[0][3]).toBe(null);
+      expect(game.grid[0][4]).not.toBe(null);
+      expect(game.grid[0][5]).toBe(null);
+
+      expect(game.grid[1][1]).toBe(null);
+      expect(game.grid[1][2]).not.toBe(null);
+      expect(game.grid[1][3]).not.toBe(null);
+      expect(game.grid[1][4]).not.toBe(null);
+      expect(game.grid[1][5]).toBe(null);
+    })
+
+    it('moves to the left till gets to a complex tetromino', function(){
+      game.grid[0][1] = 1
+      game.grid[0][2] = 1
+      game.grid[1][1] = 1
+
+      game.moveDown();
+      game.moveDown();
+      // - 1 1 - - X - - - -
+      // - 1 - X X X - - - -
+
+      expect(game.moveLeft()).toBe(true)
+      // - 1 1 - X - - - - -
+      // - 1 X X X - - - - -
+
+      expect(game.moveLeft()).toBe(false)
+    })
+
+    it('moves to the left till gets to a complex tetromino (case 2)', function(){
+      game.grid[0][0] = 1
+      game.grid[0][1] = 1
+      game.grid[0][2] = 1
+
+      game.moveDown();
+      game.moveDown();
+      // 1 1 1 - - X - - - -
+      // - - - X X X - - - -
+
+      game.moveLeft();
+      // 1 1 1 - X - - - - -
+      // - - X X X - - - - -
+
+      expect(game.moveLeft()).toBe(true)
+      // 1 1 1 X - - - - - -
+      // - X X X - - - - - -
+      
+      expect(game.moveLeft()).toBe(false)
+    })
+
+    it('moves to the left till it reaches the wall even if its still not inside the grid', function(){
+      game.moveLeft();
+      game.moveLeft();
+      expect(game.moveLeft()).toBe(true);
+
+      // X X X              
+      // - - - - - - - - - -
+
+      expect(game.moveLeft()).toBe(false);
+    })
+  })
+
   describe('#lineIsEmpty', function(){
     beforeEach(function(){
       game = new Game();

@@ -55,6 +55,51 @@ Game.prototype = {
   },
 
   moveLeft: function(){
+    var i = 0,
+        j = 0,
+        w = 0,
+        firstXBlock = 0,
+        nextXBlock = 0
+
+    var tetrominoHeight = this.currentTetromino.height();
+    var tetrominoWidth  = this.currentTetromino.width();
+    
+    // Return as early as possible if block at edge of
+    // grid
+    if ( this.currentX == 0 )
+      return false
+
+    // If block outside of grid on
+    // top allow movement as long is still inside
+    // the horizontal spaces
+    if ( this.currentY < 0 && this.currentX > 0 ){
+      this.currentX = this.currentX - 1
+      return true
+    }
+
+    // Check first if blocks to the left are available
+    for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0, j >= 0; --i, --j ){
+      // Get first block filled in
+      for ( w = 0; w < tetrominoWidth; ++w ){
+        if(this.currentTetromino.grid[i][w] == 1 ){
+          firstXBlock = w
+          break
+        }
+      }
+
+      nextXBlock = this.currentX + firstXBlock - 1
+      if ( this.grid[j][nextXBlock] != null )
+        return false
+    }
+
+    // Clean block from the grid
+    this._removeCurrentTetromino();
+
+    // Put back in
+    this.currentX = this.currentX - 1
+    this._placeCurrentTetromino();
+
+    return true
   },
 
   moveRight: function(){
