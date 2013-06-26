@@ -82,6 +82,14 @@ describe('Game', function() {
       expect(game.grid[1][5]).not.toBe(null);
       expect(game.grid[1][6]).toBe(null);
     })
+
+    it('returns false when it reaches the bottom row', function(){
+      game.moveDown();
+      for(var i = 0; i < Game.VERTICAL_SPACES - 1; ++i)
+        game.moveDown();
+
+      expect(game.moveDown()).toBe(false)
+    })
   })
 
   describe('#moveRight', function(){

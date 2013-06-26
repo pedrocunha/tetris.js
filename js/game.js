@@ -32,6 +32,9 @@ Game.prototype = {
         tetrominoHeight = this.currentTetromino.height(),
         tetrominoWidth  = this.currentTetromino.width()
 
+    if (this.currentY == (Game.VERTICAL_SPACES - 1))
+      return false
+
     for(i = 0; i < tetrominoWidth; ++i){
      
      // Checking if there is a block on the tetromino
