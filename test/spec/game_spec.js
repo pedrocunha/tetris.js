@@ -425,6 +425,46 @@ describe('Game', function() {
       expect(game.canMoveDown()).toBe(false)
     })
   })
+
+  describe('#removeCompletedRows', function(){
+    beforeEach(function(){
+      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it('removes completed lines', function(){
+      for(var i = 0; i < game.grid[0].length; ++i)
+        game.grid[0][i] = 1
+
+      game.removeCompletedRows();
+
+      for(var i = 0; i < game.grid[0].length; ++i)
+        expect(game.grid[0][i]).toBe(null)
+    })
+  })
+
+  describe('#removeRow', function(){
+    beforeEach(function(){
+      game = new Game()
+      game.start()
+    })
+
+    it('removes a specific line', function(){
+      game.grid[0][0] = 1
+
+      game.removeRow(0);
+      expect(game.grid[0][0]).toBe(null)
+    })
+
+    it('moves content which is before the removed line, one row down', function(){
+      game.grid[0][0] = 1
+
+      game.removeRow(1);
+      expect(game.grid[0][0]).toBe(null)
+      expect(game.grid[1][0]).toBe(1)
+    })
+  })
 });
 
 

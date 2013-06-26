@@ -181,6 +181,43 @@ Game.prototype = {
     return true
   },
 
+  removeCompletedRows: function(){
+    var i = this.grid.length - 1,
+        j = 0;
+
+    for ( ; i >= 0; --i ) {
+      for (j = 0; j < this.grid[i].length; ++j ) {
+        // If it's null we can skip this
+        // row
+        if ( this.grid[i][j] == null  )
+          break
+        // If last position is occupied
+        // and it hasn't return from this
+        // loop. this line is complete and
+        // must be removed
+        else if ( this.grid[i][j] != null && j == this.grid[i].length - 1 ) {
+          this.removeRow(i);
+
+          // Save one full grid iteration
+          // if row removed it 0
+          if (i != 0) this.removeCompletedRows();
+        }
+      }
+    }
+  },
+
+  removeRow: function(row){
+    var i = row
+    
+    for ( ; i >= 0; --i )
+      if ( i == 0 )
+        for ( var j = 0; j < this.grid[i].length; ++j)
+          this.grid[i][j] = null;
+      else
+        this.grid[i] = _.clone(this.grid[i - 1]);
+    
+  },
+
   // helper methods
   isAnimating: function(animating){
      if( animating == undefined )
