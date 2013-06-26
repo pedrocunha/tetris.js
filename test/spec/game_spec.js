@@ -378,6 +378,19 @@ describe('Game', function() {
       expect(game.grid[2][5]).toBe(null);
     })
   })
+
+  describe('#next', function(){
+    beforeEach(function(){
+      game = new Game();
+      game.start();
+    })
+
+    it('replaces the currentTetromino with the nextTetromino', function(){
+      var nextTetromino = game.nextTetromino;
+      game.next();
+      expect(game.currentTetromino).toBe(nextTetromino);
+    })
+  })
 });
 
 

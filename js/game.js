@@ -167,6 +167,11 @@ Game.prototype = {
     var tetrominoWidth = this.currentTetromino.width();
     this.currentX = Math.floor(Game.HORIZONTAL_SPACES / tetrominoWidth) 
   },
+  
+  next: function(){
+    this.currentTetromino = this.nextTetromino;
+    this.nextTetromino    = Tetromino.random();
+  },
 
   // helper methods
   isAnimating: function(animating){
