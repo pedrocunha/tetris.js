@@ -7,6 +7,7 @@ function Game(){
 
   this.currentX         = null;
   this.currentY         = -1;
+  this.animating        = false;
 
   this._initializeGrid();
 }
@@ -172,6 +173,31 @@ Game.prototype = {
         return false
     }
     return true
+  },
+
+  isAnimating: function(animating){
+     if( animating == undefined )
+       return this.animating
+
+     this.animating = animating
+  },
+
+  enableControls: function(){
+    var that = this;
+    key('left', function(){
+      if(that.isAnimating()) return false
+      that.moveLeft();
+    });
+
+    key('right', function(){
+      if(that.isAnimating()) return false
+      that.moveRight();
+    });
+
+    key('down', function(){
+      if(that.isAnimating()) return false
+      that.moveDown();
+    });
   },
 
   _removeCurrentTetromino: function(){

@@ -1,6 +1,14 @@
+var game = new Game();
+game.start();
+game.enableControls();
+
+var canvas  = document.getElementById('gamescreen');
+var gamePresenter = new GamePresenter(game, canvas);
+gamePresenter.prepare();
+
 var mainloop = function() {
-  // updateGame();
-  // drawGame();
+  updateGame();
+  drawGame();
 };
 
 var animFrame = window.requestAnimationFrame       ||
@@ -11,8 +19,6 @@ var animFrame = window.requestAnimationFrame       ||
                 null ;
 
 if(animFrame !== null) {
-  var canvas = $('canvas').get(0);
-
   var recursiveAnim = function() {
     mainloop();
     animFrame(recursiveAnim, canvas);
@@ -23,4 +29,14 @@ if(animFrame !== null) {
 } else {
   var ONE_FRAME_TIME = 1000.0 / 60.0 ;
   setInterval(mainloop, ONE_FRAME_TIME);
+}
+
+
+function updateGame(){
+  
+}
+
+function drawGame(){
+  gamePresenter.clear();
+  gamePresenter.draw();
 }

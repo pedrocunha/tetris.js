@@ -5,43 +5,7 @@ function Tetromino(coordinates, color){
   this._initializeGrid();
 }
 
-// Instance methods
-function makeSVG(tag, attrs) {
-  var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-  for (var k in attrs)
-    el.setAttribute(k, attrs[k]);
-  return el;
-}
-
-
 Tetromino.prototype = {
-  toSVG: function(){
-    var svgNS = "http://www.w3.org/2000/svg";
-    var svg   = makeSVG('svg', { xmlns: svgNS, version: '1.1' })
-    var i     = 0;
-    var point = null;
-    var rect  = null;
-    var attrs = null;
-
-
-    for(; i < this.coordinates.length; ++i){
-      point = this.coordinates[i];
-
-      attrs = {
-        x:      point[0] * Tetromino.BLOCK_SIZE,
-        y:      point[1] * Tetromino.BLOCK_SIZE, 
-        style:  "fill:blue;stroke:black;stroke-width:5",
-        width:  Tetromino.BLOCK_SIZE,
-        height: Tetromino.BLOCK_SIZE
-      }
-
-      rect = makeSVG('rect', attrs);
-
-      svg.appendChild(rect);
-    }
-
-    return svg;
-  },
 
   clone: function(){
     return new Tetromino(_.clone(this.coordinates), this.color);
@@ -89,9 +53,6 @@ Tetromino.prototype = {
           this.grid[i][j] = 0
  },
 }
-
-// Class constants
-Tetromino.BLOCK_SIZE = 50
 
 // Class methods
 Tetromino.all = [
