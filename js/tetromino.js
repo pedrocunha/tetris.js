@@ -59,7 +59,7 @@ Tetromino.all = [
   new Tetromino([[0,0], [1,0], [2,0], [3, 0]]), // xxxx
   new Tetromino([[0,0], [0,1], [1,1], [2, 1]]), // xoo/xxx
   new Tetromino([[2,0], [0,1], [1,1], [2, 1]]), // oox/xxx
-  new Tetromino([[0,0], [1,0], [1,0], [1, 1]]), // xx/xx
+  new Tetromino([[0,0], [1,0], [0,1], [1, 1]]), // xx/xx
   new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
   new Tetromino([[1,0], [0,1], [1,1], [2, 1]]), // oxo/xxx
   new Tetromino([[0,0], [1,0], [1,1], [2, 1]])  // xxo/oxx
