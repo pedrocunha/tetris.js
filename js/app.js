@@ -33,7 +33,8 @@ if(animFrame !== null) {
 
 
 function updateGame(){
-  
+  if(!game.canMoveDown())
+    game.next();
 }
 
 function drawGame(){

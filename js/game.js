@@ -147,13 +147,14 @@ Game.prototype = {
 
     // Decide what's the currentX position
     // based on the width of the Tetromino
-    var tetrominoWidth = this.currentTetromino.width();
-    this.currentX = Math.floor(Game.HORIZONTAL_SPACES / tetrominoWidth) 
+    this.currentX         = Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width()) 
   },
   
   next: function(){
     this.currentTetromino = this.nextTetromino;
     this.nextTetromino    = Tetromino.random();
+    this.currentY         = -1;
+    this.currentX         = Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width()) 
   },
 
   canMoveDown: function(){

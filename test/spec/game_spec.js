@@ -390,6 +390,13 @@ describe('Game', function() {
       game.next();
       expect(game.currentTetromino).toBe(nextTetromino);
     })
+
+    it('resets currentY', function(){
+      game.moveDown();
+      expect(game.currentY).toBe(0);
+      game.next();
+      expect(game.currentY).toBe(-1);
+    })
   })
 
   describe('#canMoveDown', function(){
