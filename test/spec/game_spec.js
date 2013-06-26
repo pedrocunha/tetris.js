@@ -195,6 +195,38 @@ describe('Game', function() {
     })
   })
 
+  describe('#moveRight (Example 2)', function(){
+    var tetromino;
+
+    beforeEach(function(){
+      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it('moves the whole tetromino', function(){
+      game.moveDown()
+      game.moveDown();
+      game.moveDown();
+      game.moveRight();
+
+      // - - - - - - - - - -
+      // - - - - - X X - - -
+      // - - - - X X - - - - 
+      expect(game.grid[1][3]).toBe(null);
+      expect(game.grid[1][4]).toBe(null);
+      expect(game.grid[1][5]).not.toBe(null);
+      expect(game.grid[1][6]).not.toBe(null);
+      expect(game.grid[1][7]).toBe(null);
+
+      expect(game.grid[2][3]).toBe(null);
+      expect(game.grid[2][4]).not.toBe(null);
+      expect(game.grid[2][5]).not.toBe(null);
+      expect(game.grid[2][6]).toBe(null);
+      expect(game.grid[2][7]).toBe(null);
+    })
+  })
+
   describe('#moveLeft', function(){
     var tetromino;
 
@@ -283,6 +315,59 @@ describe('Game', function() {
       // - - - - - - - - - -
 
       expect(game.moveLeft()).toBe(false);
+    })
+  })
+
+  describe('#moveLeft (Example 2)', function(){
+    var tetromino;
+
+    beforeEach(function(){
+      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it('can always move once to the left on the beginning', function(){
+      expect(game.moveLeft()).toBe(true)
+    })
+
+    it('moves to the left till it reaches the wall', function(){
+      game.moveDown()
+      game.moveLeft();                    // - - X X - - - - - -
+      game.moveLeft();                    // - X X - - - - - - - 
+      expect(game.moveLeft()).toBe(true); // X X - - - - - - - -
+      expect(game.moveLeft()).toBe(false); 
+    })
+
+    it('moves the whole tetromino', function(){
+      game.moveDown()
+      game.moveDown();
+      game.moveDown();
+      game.moveLeft();
+
+      // - - - - - - - - - -
+      // - - - X X - - - - -
+      // - - X X - - - - - -
+      expect(game.grid[0][0]).toBe(null);
+      expect(game.grid[0][1]).toBe(null);
+      expect(game.grid[0][2]).toBe(null);
+      expect(game.grid[0][3]).toBe(null);
+      expect(game.grid[0][4]).toBe(null);
+      expect(game.grid[0][5]).toBe(null);
+
+      expect(game.grid[1][0]).toBe(null);
+      expect(game.grid[1][1]).toBe(null);
+      expect(game.grid[1][2]).toBe(null);
+      expect(game.grid[1][3]).not.toBe(null);
+      expect(game.grid[1][4]).not.toBe(null);
+      expect(game.grid[1][5]).toBe(null);
+
+      expect(game.grid[2][0]).toBe(null);
+      expect(game.grid[2][1]).toBe(null);
+      expect(game.grid[2][2]).not.toBe(null);
+      expect(game.grid[2][3]).not.toBe(null);
+      expect(game.grid[2][4]).toBe(null);
+      expect(game.grid[2][5]).toBe(null);
     })
   })
 });

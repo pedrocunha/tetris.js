@@ -79,7 +79,7 @@ Game.prototype = {
     }
 
     // Check first if blocks to the left are available
-    for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0, j >= 0; --i, --j ){
+    for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0 && j >= 0; --i, --j ){
       // Get first block filled in
       for ( w = 0; w < tetrominoWidth; ++w ){
         if(this.currentTetromino.grid[i][w] == 1 ){
@@ -130,7 +130,7 @@ Game.prototype = {
         return false
 
     // Check first if blocks to the right are available
-    for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0, j >= 0; --i, --j ){
+    for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0 && j >= 0; --i, --j ){
       // Get last block filled in
       for ( w = 0; w < tetrominoWidth; ++w ){
         if(this.currentTetromino.grid[i][w] == 1 )
