@@ -33,8 +33,10 @@ if(animFrame !== null) {
 
 
 function updateGame(){
-  if(!game.canMoveDown())
+  if(!game.canMoveDown()){
+    game.removeCompletedRows();
     game.next();
+  }
 }
 
 function drawGame(){
