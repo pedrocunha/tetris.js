@@ -9,6 +9,8 @@ GamePresenter.prototype = {
   prepare: function(){ 
     canvas.style.height = GamePresenter.gameHeight + "px";
     canvas.style.width  = GamePresenter.gameWidth + "px";
+    canvas.height       = GamePresenter.gameHeight;
+    canvas.width        = GamePresenter.gameWidth;
   },
 
   clear: function(){
@@ -28,4 +30,4 @@ GamePresenter.prototype = {
 }
 
 GamePresenter.gameWidth  = TetrominoPresenter.BLOCK_SIZE * Game.HORIZONTAL_SPACES;
-GamePresenter.gameHeight = TetrominoPresenter.BLOCK_SIZE * Game.VERTICAL_SPACES * 0.70;
+GamePresenter.gameHeight = TetrominoPresenter.BLOCK_SIZE * Game.VERTICAL_SPACES;

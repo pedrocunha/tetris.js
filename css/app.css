@@ -7,8 +7,4 @@ body {
 .gamescreen {
   background: black;
   border: 3px solid red;
-  display: inline-block;
-  width: 500px;
-  height: 100%;
-  position: relative;
 }
