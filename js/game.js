@@ -166,15 +166,6 @@ Game.prototype = {
   },
 
   // helper methods
-  lineIsEmpty: function(row){
-    var i = 0
-    for(; i < this.grid[row].length; ++i){
-      if( this.grid[row][i] != null )
-        return false
-    }
-    return true
-  },
-
   isAnimating: function(animating){
      if( animating == undefined )
        return this.animating

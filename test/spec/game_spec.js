@@ -285,23 +285,6 @@ describe('Game', function() {
       expect(game.moveLeft()).toBe(false);
     })
   })
-
-  describe('#lineIsEmpty', function(){
-    beforeEach(function(){
-      game = new Game();
-      game.start()
-    })
-
-    it('returns true for any row when game starts', function(){
-      for(var i = 0; i < Game.VERTICAL_SPACES; ++i)
-        expect(game.lineIsEmpty(i)).toBe(true)
-    })
-
-    it('returns false if row contains at least one non-null object', function(){
-      game.grid[1][5] = {}
-      expect(game.lineIsEmpty(1)).toBe(false)
-    })
-  })
 });
 
 
