@@ -26,25 +26,8 @@ Game.prototype = {
   },
 
   moveDown: function(){
-    var i               = 0,
-        j               = 0,
-        futureY         = this.currentY + 1,
-        tetrominoHeight = this.currentTetromino.height(),
-        tetrominoWidth  = this.currentTetromino.width()
-
-    if (this.currentY == (Game.VERTICAL_SPACES - 1))
+    if (!this.canMoveDown())
       return false
-
-    for(i = 0; i < tetrominoWidth; ++i){
-     
-     // Checking if there is a block on the tetromino
-     // grid on the last row
-     if(this.currentTetromino.grid[tetrominoHeight - 1][i] == 1)
-
-       // Checking if the grid is available for that block
-       if(this.grid[futureY][this.currentX + i] != null)
-         return false
-    }
 
     // All is fine! We can move the tetromino down
     // Easiest algorithm is just to remove any references to
@@ -52,7 +35,7 @@ Game.prototype = {
     this._removeCurrentTetromino();
 
     // Put the tetromino back in
-    this.currentY = futureY
+    this.currentY = this.currentY + 1;
     this._placeCurrentTetromino();
 
     return true
@@ -171,6 +154,30 @@ Game.prototype = {
   next: function(){
     this.currentTetromino = this.nextTetromino;
     this.nextTetromino    = Tetromino.random();
+  },
+
+  canMoveDown: function(){
+    var i               = 0,
+        j               = 0,
+        futureY         = this.currentY + 1,
+        tetrominoHeight = this.currentTetromino.height(),
+        tetrominoWidth  = this.currentTetromino.width()
+
+    if (this.currentY == (Game.VERTICAL_SPACES - 1))
+      return false
+
+    for(i = 0; i < tetrominoWidth; ++i){
+     
+     // Checking if there is a block on the tetromino
+     // grid on the last row
+     if(this.currentTetromino.grid[tetrominoHeight - 1][i] == 1)
+
+       // Checking if the grid is available for that block
+       if(this.grid[futureY][this.currentX + i] != null)
+         return false
+    }
+
+    return true
   },
 
   // helper methods

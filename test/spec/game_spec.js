@@ -391,6 +391,33 @@ describe('Game', function() {
       expect(game.currentTetromino).toBe(nextTetromino);
     })
   })
+
+  describe('#canMoveDown', function(){
+    beforeEach(function(){
+      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it('returns true if at top row and there is no blocking tetrominos', function(){
+      expect(game.canMoveDown()).toBe(true)
+    })
+
+    it('returns false if at last row', function(){
+      game.moveDown();
+      for(var i = 0; i < Game.VERTICAL_SPACES - 1; ++i)
+        game.moveDown();
+
+      expect(game.canMoveDown()).toBe(false)
+    })
+
+    it('returns false if at top row and there is a blocking tetromino', function(){
+      for(var i = 0; i < game.grid[0].length; ++i)
+        game.grid[0][i] = 1
+
+      expect(game.canMoveDown()).toBe(false)
+    })
+  })
 });
 
 
