@@ -12,7 +12,7 @@ describe('Tetromino', function() {
     });
 
     it('sets a default color', function(){
-      expect(tetromino.color).toEqual('black')
+      expect(tetromino.color).toEqual('#FFFFFF')
     })
 
     it('initializes a grid with 2 rows and 3 columns', function(){

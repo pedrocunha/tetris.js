@@ -4,8 +4,8 @@ function TetrominoPresenter(context) {
 
 TetrominoPresenter.prototype = {
   draw: function(tetromino, xPos, yPos){
-    this.context.fillStyle = "#FFDDEE"
-    this.context.fillRect(xPos, yPos, TetrominoPresenter.BLOCK_SIZE, TetrominoPresenter.BLOCK_SIZE)
+    this.context.fillStyle = tetromino.color;
+    this.context.fillRect(xPos, yPos, TetrominoPresenter.BLOCK_SIZE, TetrominoPresenter.BLOCK_SIZE);
   }
 }
 
