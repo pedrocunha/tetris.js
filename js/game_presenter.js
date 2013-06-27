@@ -26,6 +26,24 @@ GamePresenter.prototype = {
       for (j = 0; j < this.game.grid[i].length; ++j) 
         if ( this.game.grid[i][j] != undefined )
           this.tetrominoPresenter.draw(game.grid[i][j], j * TetrominoPresenter.BLOCK_SIZE, i * TetrominoPresenter.BLOCK_SIZE);
+  },
+
+  enableControls: function(){
+    var that = this;
+    key('left', function(){
+      if (that.game.isAnimating() ) return false
+      that.game.moveLeft();
+    });
+
+    key('right', function(){
+      if (that.game.isAnimating() ) return false
+      that.game.moveRight();
+    });
+
+    key('down', function(){
+      if (that.game.isAnimating() ) return false
+      that.game.moveDown();
+    });
   }
 }
 

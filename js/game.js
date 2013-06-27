@@ -226,24 +226,6 @@ Game.prototype = {
      this.animating = animating
   },
 
-  enableControls: function(){
-    var that = this;
-    key('left', function(){
-      if(that.isAnimating()) return false
-      that.moveLeft();
-    });
-
-    key('right', function(){
-      if(that.isAnimating()) return false
-      that.moveRight();
-    });
-
-    key('down', function(){
-      if(that.isAnimating()) return false
-      that.moveDown();
-    });
-  },
-
   _removeCurrentTetromino: function(){
     // Search algorithm goes bottom-up
     var found = false;

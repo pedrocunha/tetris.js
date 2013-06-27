@@ -1,10 +1,10 @@
 var game = new Game();
 game.start();
-game.enableControls();
 
 var canvas  = document.getElementById('gamescreen');
 var gamePresenter = new GamePresenter(game, canvas);
 gamePresenter.prepare();
+gamePresenter.enableControls();
 
 var mainloop = function() {
   updateGame();
