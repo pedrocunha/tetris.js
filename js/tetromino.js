@@ -1,6 +1,7 @@
 function Tetromino(coordinates, color){
   this.coordinates = coordinates;
   this.color       = color || '#FFFFFF';
+  this.grid        = [];
 
   this._initializeGrid();
 }
@@ -19,14 +20,28 @@ Tetromino.prototype = {
     return this.grid.length
   },
 
+  rotateRight: function(){
+    var i       = this.grid.length - 1,
+        j       = 0,
+        newGrid = [];
+
+    for ( ; i >= 0; --i ) {
+      for ( var j = 0; j < this.grid[i].length; ++j ) {
+        if( newGrid[j] == null ) newGrid[j] = [];
+        newGrid[j][this.grid.length - 1 - i] = this.grid[i][j];
+      }
+    }
+
+    this.grid = newGrid;
+    return newGrid
+  },
+
   _initializeGrid: function(){
     var i        = 0,
         j        = 0
         point    = null,
         currentY = null,
         maxX     = 0
-
-    this.grid = [];
 
     // Fill 1s where there is
     // a block

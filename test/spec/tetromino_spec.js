@@ -57,20 +57,52 @@ describe('Tetromino', function() {
 
   describe('#width', function(){
     it('returns 4 as width if it is 4 blocks wide', function(){
-      tetromino = new Tetromino([[0,0], [1,0], [2,0], [3, 0]]), // xxxx
+      tetromino = new Tetromino([[0,0], [1,0], [2,0], [3, 0]]) // xxxx
       expect(tetromino.width()).toEqual(4)
     })
 
     it('correctly calculates the width of 3 for a block with 2 levels', function(){
-      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
+      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]) // oxx/xxo
       expect(tetromino.width()).toEqual(3)
     })
   })
 
-  describe ('#height', function(){
+  describe('#height', function(){
     it('returns 2 as height if its 2 row wide', function(){
-      tetromino = new Tetromino([[0,0], [1,0], [1,0], [1, 1]]), // xx/xx
+      tetromino = new Tetromino([[0,0], [1,0], [1,0], [1, 1]]) // xx/xx
       expect(tetromino.height()).toEqual(2)
+    })
+  })
+
+  describe('#rotateRight', function(){
+    beforeEach(function(){
+      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]) // oxx/xxo
+      tetromino.rotateRight();
+    })
+
+    it('rotates the tetromino to the right', function(){
+      // - X X
+      // X X -
+
+      // X -
+      // X X
+      // - X
+      expect(tetromino.grid[0][0]).toBe(1);
+      expect(tetromino.grid[0][1]).toBe(0);
+
+      expect(tetromino.grid[1][0]).toBe(1);
+      expect(tetromino.grid[1][1]).toBe(1);
+
+      expect(tetromino.grid[2][0]).toBe(0);
+      expect(tetromino.grid[2][1]).toBe(1);
+    })
+
+    it('updates the height', function(){
+      expect(tetromino.height()).toBe(3);
+    })
+
+    it('updates the width', function(){
+      expect(tetromino.width()).toBe(2);
     })
   })
 });
