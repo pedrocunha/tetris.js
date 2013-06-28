@@ -157,30 +157,6 @@ Game.prototype = {
     this.currentX         = Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width()) 
   },
 
-  canMoveDown: function(){
-    var i               = 0,
-        j               = 0,
-        futureY         = this.currentY + 1,
-        tetrominoHeight = this.currentTetromino.height(),
-        tetrominoWidth  = this.currentTetromino.width()
-
-    if (this.currentY == (Game.VERTICAL_SPACES - 1))
-      return false
-
-    for(i = 0; i < tetrominoWidth; ++i){
-     
-     // Checking if there is a block on the tetromino
-     // grid on the last row
-     if(this.currentTetromino.grid[tetrominoHeight - 1][i] == 1)
-
-       // Checking if the grid is available for that block
-       if(this.grid[futureY][this.currentX + i] != null)
-         return false
-    }
-
-    return true
-  },
-
   removeCompletedRows: function(){
     var i = this.grid.length - 1,
         j = 0;
@@ -226,6 +202,33 @@ Game.prototype = {
      this.animating = animating
   },
 
+  canMoveDown: function(){
+    var i               = 0,
+        j               = 0,
+        tetrominoWidth  = this.currentTetromino.width()
+
+    if (this.currentY == (Game.VERTICAL_SPACES - 1))
+      return false
+
+    for(i = this.currentX; i < this.currentX + tetrominoWidth; ++i){
+      for(j = this.currentY + 1; j >= 0; --j){
+        
+        // Edge case when outside
+        // of the grid
+        if(j - 1 > -1 && this.grid[j - 1][i] != this.currentTetromino )
+          continue
+        else if(this.grid[j][i] == this.currentTetromino)
+          break
+        else if(this.grid[j][i] != null)
+          return false
+      }
+    }
+     
+    return true
+  },
+
+
+  // Private methods
   _removeCurrentTetromino: function(){
     // Search algorithm goes bottom-up
     var found = false;

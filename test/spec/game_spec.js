@@ -48,7 +48,7 @@ describe('Game', function() {
       // values. moveDown returns false because
       // he can't move down. 
       for ( var i = 0; i < Game.HORIZONTAL_SPACES; ++i )
-        game.grid[0][i] = {}
+        game.grid[0][i] = 1
 
       expect(game.moveDown()).toBe(false);
     })
@@ -84,6 +84,87 @@ describe('Game', function() {
     })
 
     it('returns false when it reaches the bottom row', function(){
+      game.moveDown();
+      for(var i = 0; i < Game.VERTICAL_SPACES - 1; ++i)
+        game.moveDown();
+
+      expect(game.moveDown()).toBe(false)
+    })
+
+    it('returns false when there is an obstable on the way', function(){
+      game.moveDown();
+      game.moveDown();
+
+
+      // - - - X - - - - - -
+      // - - - X X X - - - -
+
+      // Introduce the obstacle
+      // - - - X - - - - - -
+      // - - - X X X - - - -
+      // - - o o - - - - - -
+      game.grid[2][2] = 1
+      game.grid[2][3] = 1
+
+      expect(game.moveDown()).toBe(false)
+    })
+
+    it('returns false when there is an obstable on the way (case 2)', function(){
+      game.moveDown();
+      game.moveDown();
+
+
+      // - - - X - - - - - -
+      // - - - X X X - - - -
+
+      // Introduce the obstacle
+      // - - - X - - - - - -
+      // - - o X X X - - - -
+      // - - o o - - - - - -
+      game.grid[1][2] = 1
+      game.grid[2][2] = 1
+      game.grid[2][3] = 1
+
+      expect(game.moveDown()).toBe(false)
+    })
+  })
+
+  describe('#moveDown (Example 2)', function(){
+    beforeEach(function(){
+      tetromino = new Tetromino([[0,0], [1,0], [1,1], [2, 1]])  // xxo/oxx
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+
+      game.moveDown();
+      game.moveDown();
+    })
+
+    it('returns true if at top row and there is no blocking tetrominos', function(){
+      expect(game.moveDown()).toBe(true)
+    })
+
+    it('returns false when there is an obstable on the way', function(){
+      // Introduce the obstacle
+      // - - - X X - - - - -
+      // - - o o X X - - - -
+      game.grid[1][2] = 1
+      game.grid[1][3] = 1
+
+      expect(game.moveDown()).toBe(false)
+    })
+
+
+    it('returns true when can move down even if there is an obstacle on the next row', function(){
+      // Introduce the obstacle
+      // - - - X X - - - - -
+      // - - - - X X - - - -
+      // - - - o - - - - - -
+      game.grid[2][3] = 1
+
+      expect(game.moveDown()).toBe(true)
+    })
+
+    it('returns false if the tetromino is at last row', function(){
       game.moveDown();
       for(var i = 0; i < Game.VERTICAL_SPACES - 1; ++i)
         game.moveDown();
@@ -396,33 +477,6 @@ describe('Game', function() {
       expect(game.currentY).toBe(0);
       game.next();
       expect(game.currentY).toBe(-1);
-    })
-  })
-
-  describe('#canMoveDown', function(){
-    beforeEach(function(){
-      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
-      game = new Game()
-      game.start({ currentTetromino: tetromino })
-    })
-
-    it('returns true if at top row and there is no blocking tetrominos', function(){
-      expect(game.canMoveDown()).toBe(true)
-    })
-
-    it('returns false if at last row', function(){
-      game.moveDown();
-      for(var i = 0; i < Game.VERTICAL_SPACES - 1; ++i)
-        game.moveDown();
-
-      expect(game.canMoveDown()).toBe(false)
-    })
-
-    it('returns false if at top row and there is a blocking tetromino', function(){
-      for(var i = 0; i < game.grid[0].length; ++i)
-        game.grid[0][i] = 1
-
-      expect(game.canMoveDown()).toBe(false)
     })
   })
 
