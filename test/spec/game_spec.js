@@ -519,6 +519,176 @@ describe('Game', function() {
       expect(game.grid[1][0]).toBe(1)
     })
   })
+
+  describe('#rotate', function(){
+    beforeEach(function(){
+      tetromino = new Tetromino([[1,0], [2,0], [0,1], [1, 1]]), // oxx/xxo
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it('can rotate when tetromino is at the top', function(){
+      expect(game.rotate()).toBe(true)
+    })
+
+    it('reflects the movement on the inner grid', function(){
+      game.moveDown()
+      game.moveDown()
+      // - - - - X X - - - -
+      // - - - X X - - - - -
+
+      game.rotate()
+      // - - - - X - - - - -
+      // - - - - X X - - - -
+      // - - - - - X - - - -
+
+      expect(game.grid[0][0]).toBe(null);
+      expect(game.grid[0][1]).toBe(null);
+      expect(game.grid[0][2]).toBe(null);
+      expect(game.grid[0][3]).toBe(null);
+      expect(game.grid[0][4]).not.toBe(null);
+      expect(game.grid[0][5]).toBe(null);
+      expect(game.grid[0][6]).toBe(null);
+
+      expect(game.grid[1][0]).toBe(null);
+      expect(game.grid[1][1]).toBe(null);
+      expect(game.grid[1][2]).toBe(null);
+      expect(game.grid[1][3]).toBe(null);
+      expect(game.grid[1][4]).not.toBe(null);
+      expect(game.grid[1][5]).not.toBe(null);
+      expect(game.grid[1][6]).toBe(null);
+
+      expect(game.grid[2][0]).toBe(null);
+      expect(game.grid[2][1]).toBe(null);
+      expect(game.grid[2][2]).toBe(null);
+      expect(game.grid[2][3]).toBe(null);
+      expect(game.grid[2][4]).toBe(null);
+      expect(game.grid[2][5]).not.toBe(null);
+      expect(game.grid[2][6]).toBe(null);
+    })
+
+    it('can rotate when tetromino is at the middle of empty grid', function(){
+      game.moveDown();
+      game.moveDown();
+      game.moveDown();
+      expect(game.rotate()).toBe(true)
+    })
+
+    it('can not rotate when tetromino is at the top and first line is filled', function(){
+      for(var i = 0; i < game.grid[0].length; ++i)
+        game.grid[0][i] = 1
+
+      expect(game.rotate()).toBe(false)
+    })
+
+    it('can rotate more than once', function(){
+      game.moveDown()
+      game.moveDown()
+
+      game.rotate()
+      game.rotate()
+
+      expect(game.grid[0][0]).toBe(null);
+      expect(game.grid[0][1]).toBe(null);
+      expect(game.grid[0][2]).toBe(null);
+      expect(game.grid[0][3]).toBe(null);
+      expect(game.grid[0][4]).not.toBe(null);
+      expect(game.grid[0][5]).not.toBe(null);
+      expect(game.grid[0][6]).toBe(null);
+
+      expect(game.grid[1][0]).toBe(null);
+      expect(game.grid[1][1]).toBe(null);
+      expect(game.grid[1][2]).toBe(null);
+      expect(game.grid[1][3]).not.toBe(null);
+      expect(game.grid[1][4]).not.toBe(null);
+      expect(game.grid[1][5]).toBe(null);
+      expect(game.grid[1][6]).toBe(null);
+    })
+
+    it('does not allow to rotate when there will be an obstacle on the way', function(){
+      game.moveDown()
+      game.moveDown()
+      // - - - - X X - - - -
+      // - - - X X - - - - -
+
+      // Inserting obstacle
+      // - - - - X X - - - -
+      // - - - X X - - - - -
+      // - - - - - o - - - -
+      game.grid[2][5] = 1
+      expect(game.rotate()).toBe(false)
+    })
+
+    it('does not allow to rotate when there will be an obstacle on the way (case 2)', function(){
+      game.moveDown()
+      game.moveDown()
+      // - - - - X X - - - -
+      // - - - X X - - - - -
+
+      // Inserting obstacle
+      // - - - - X X - - - -
+      // - - - X X o - - - -
+      // - - - - - o - - - -
+      game.grid[1][5] = 1
+      game.grid[2][5] = 1
+      expect(game.rotate()).toBe(false)
+    })
+
+    it('does not allow to rotate if close to the left edge', function(){
+      game.moveDown()
+      game.moveDown()
+      // - - - - X X - - - -
+      // - - - X X - - - - -
+
+      game.rotate()
+      // - - - - X - - - - -
+      // - - - - X X - - - -
+      // - - - - - X - - - -
+      for(var i = 0; i < 4; ++i)
+        game.moveLeft()
+
+      // X - - - - - - - - -
+      // X X - - - - - - - -
+      // - X - - - - - - - -
+      expect(game.rotate()).toBe(false)
+    })
+
+  })
+
+  describe('#rotate (Example 2)', function(){
+    beforeEach(function(){
+      tetromino = new Tetromino([[0,0], [1,0], [2,0], [3, 0]]) // xxxx
+      game = new Game()
+      game.start({ currentTetromino: tetromino })
+    })
+
+    it('does not allow to rotate if close to the right edge', function(){
+      game.moveDown()
+      game.moveDown()
+      game.moveDown()
+      game.moveDown()
+      // - - - - - - - - - -
+      // - - - - - - - - - -
+      // - - - - - - - - - -
+      // - - - X X X X - - -
+
+      game.rotate()
+      // - - - - - - - - - -
+      // - - - - - X - - - -
+      // - - - - - X - - - -
+      // - - - - - X - - - -
+      // - - - - - X - - - -
+      for(var i = 0; i < 4; ++i)
+        game.moveRight()
+
+      // - - - - - - - - - -
+      // - - - - - - - - - X
+      // - - - - - - - - - X
+      // - - - - - - - - - X
+      // - - - - - - - - - X
+      expect(game.rotate()).toBe(false)
+    })
+  })
 });
 
 

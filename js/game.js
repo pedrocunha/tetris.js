@@ -4,10 +4,23 @@ function Game(){
   this.grid             = [];
   this.currentTetromino = null; 
   this.nextTetromino    = null;
-
-  this.currentX         = null;
-  this.currentY         = -1;
   this.animating        = false;
+
+  /*
+   * currentX:
+   *   This variable holds the current X position of
+   *   the current tetromino, considering it's left
+   *   most blocks
+   */
+  this.currentX = null;
+
+  /*
+   * currentY:
+   *   This variable holds the current Y position of
+   *   the current tetromino, considering it's bottom
+   *   most block.
+   */
+  this.currentY = -1;
 
   this._initializeGrid();
 }
@@ -147,14 +160,14 @@ Game.prototype = {
 
     // Decide what's the currentX position
     // based on the width of the Tetromino
-    this.currentX         = Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width()) 
+    this.currentX = this._calculateCurrentX();
   },
   
   next: function(){
     this.currentTetromino = this.nextTetromino;
     this.nextTetromino    = Tetromino.random();
     this.currentY         = -1;
-    this.currentX         = Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width()) 
+    this.currentX         = this._calculateCurrentX();
   },
 
   removeCompletedRows: function(){
@@ -192,6 +205,62 @@ Game.prototype = {
       else
         this.grid[i] = _.clone(this.grid[i - 1]);
     
+  },
+
+  rotate: function(){
+    var newGrid      = this.currentTetromino.rotateRight(false),
+        currHeight   = this.currentTetromino.height(),
+        currWidth    = this.currentTetromino.width(),
+        futureHeight = newGrid.length,
+        futureWidth  = newGrid[0].length,
+        futureX      = null,
+        futureY      = null;
+
+    if ( futureHeight > currHeight )
+      futureY = this.currentY + Math.floor(futureHeight/2)
+    else if ( futureHeight < currHeight )
+      futureY = this.currentY - Math.floor(currHeight/2)
+
+    if ( futureWidth > currWidth )
+      futureX = this.currentX - Math.floor(futureWidth/2)
+    else if ( futureWidth < currWidth )
+      futureX = this.currentX + Math.floor(currWidth/2)
+    
+    // if futureX is less than 0
+    // means the tetromino would be
+    // drawn outside of the left bound
+    if ( futureX < 0 )
+      return false
+
+    // if futureX plus futureWidth is
+    // higher than Game.HORIZONTAL_SPACES means
+    // the tetromino would be drawn outside
+    // of the right bound
+    if ( futureX + futureWidth > Game.HORIZONTAL_SPACES )
+      return false
+
+    var w = futureHeight;
+    for (var i = futureY; i >= 0 && w > 0; --i, --w){
+      for (var j = futureX; j < futureX + futureWidth; ++j){
+
+        if(newGrid[w - 1][j - futureX] != 1)
+          continue
+
+        if(this.grid[i][j] != null && this.grid[i][j] != this.currentTetromino)
+          return false
+      }
+    }
+    
+    // Clean block from the grid
+    this._removeCurrentTetromino();
+
+    this.currentTetromino.rotateRight();
+    this.currentX = futureX;
+    this.currentY = futureY;
+
+    this._placeCurrentTetromino();
+
+    return true
   },
 
   // helper methods
@@ -269,6 +338,13 @@ Game.prototype = {
 
     }
     return true
+  },
+
+  _calculateCurrentX: function(){
+    if(this.currentTetromino.width() % 2 == 0)
+      return (Game.HORIZONTAL_SPACES - this.currentTetromino.width())/2
+    else
+      return Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width()) 
   }
 }
 

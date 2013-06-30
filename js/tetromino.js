@@ -20,20 +20,22 @@ Tetromino.prototype = {
     return this.grid.length
   },
 
-  rotateRight: function(){
+  rotateRight: function(commit){
     var i       = this.grid.length - 1,
         j       = 0,
         newGrid = [];
 
     for ( ; i >= 0; --i ) {
       for ( var j = 0; j < this.grid[i].length; ++j ) {
-        if( newGrid[j] == null ) newGrid[j] = [];
+        if ( newGrid[j] == null ) newGrid[j] = [];
         newGrid[j][this.grid.length - 1 - i] = this.grid[i][j];
       }
     }
 
-    this.grid = newGrid;
-    return newGrid
+    if ( commit === undefined || commit === true )
+      this.grid = newGrid;
+
+    return newGrid;
   },
 
   _initializeGrid: function(){

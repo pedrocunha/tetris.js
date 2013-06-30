@@ -44,6 +44,11 @@ GamePresenter.prototype = {
       if (that.game.isAnimating() ) return false
       that.game.moveDown();
     });
+
+    key('enter', function(){
+      if (that.game.isAnimating() ) return false
+      that.game.rotate();
+    });
   }
 }
 
