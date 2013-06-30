@@ -3,6 +3,7 @@ function GamePresenter(game, canvas){
   this.canvas = canvas;
   this.context = this.canvas.getContext('2d');
   this.tetrominoPresenter = new TetrominoPresenter(this.context);
+  this.timeout = null;
 }
 
 GamePresenter.prototype = {
@@ -11,6 +12,8 @@ GamePresenter.prototype = {
     canvas.style.width  = GamePresenter.gameWidth + "px";
     canvas.height       = GamePresenter.gameHeight;
     canvas.width        = GamePresenter.gameWidth;
+
+    this._autoMoveDown();
   },
 
   clear: function(){
@@ -42,13 +45,21 @@ GamePresenter.prototype = {
 
     key('down', function(){
       if (that.game.isAnimating() ) return false
+      clearInterval(that.timeout);
       that.game.moveDown();
+      that._autoMoveDown();
     });
 
     key('enter', function(){
       if (that.game.isAnimating() ) return false
       that.game.rotate();
     });
+  },
+
+  _autoMoveDown: function(){
+    this.timeout = setInterval(function(){
+      game.moveDown();
+    }, 700)
   }
 }
 
