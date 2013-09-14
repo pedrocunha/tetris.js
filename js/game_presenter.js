@@ -74,8 +74,14 @@ GamePresenter.prototype = {
       that.game.rotate();
     });
 
+    $('a.pause').click(function(){
+      $(this).toggleClass("active");
+      $('.tooltip').toggleClass('active');
+    })
+
     key('p', function(){
       that.pause();
+      $('a.pause').trigger('click');
     });
   },
 

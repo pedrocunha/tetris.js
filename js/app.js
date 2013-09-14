@@ -1,7 +1,7 @@
 var game = new Game();
 game.start();
 
-var canvas  = document.getElementById('gamescreen');
+var canvas  = document.getElementById('gameCanvas');
 var gamePresenter = new GamePresenter(game, canvas);
 gamePresenter.prepare();
 gamePresenter.enableControls();

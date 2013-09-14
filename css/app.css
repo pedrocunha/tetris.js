@@ -1,10 +1,108 @@
+* {
+}
+
 body {
   background: black;
   height: 600px;
   text-align: center;
+  font-family: 'Roboto Slab', serif;
 }
 
 .gamescreen {
   background: black;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 5px;
+  z-index: 5;
+  width: 300px;
+  height: 600px;
+}
+
+.canvasContainer {
+  width: inherit;
+  height: inherit;
+  overflow: hidden;
   border: 3px solid red;
+  position: absolute;
+}
+
+.pause {
+  position: absolute;
+  top: 0;
+  left: -55px;
+  z-index: 15;
+  font-size: 20px;
+  border-radius: 50%;
+  margin: 0;
+  height: 25px;
+  width: 25px;
+  line-height: 25px;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+.pause, .pause:visited {
+  background-color: #e33100;
+}
+
+.pause:active {
+  top: 1px;
+}
+
+.pause:hover, .pause.active{
+  background-color: #872300;
+}
+
+.tooltip {
+  color: white;
+  position: absolute;
+  top: -240px;
+  font-size: 14px;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  padding-left: 30px;
+  line-height: 40px;
+  background-color: black;
+  box-sizing: border-box;
+  opacity: 0.9;
+
+  -webkit-transition: top 0.2s ease-in-out;
+  -moz-transition: top 0.2s ease-in-out;
+  -o-transition: top 0.2s ease-in-out;
+  -ms-transition: top 0.2s ease-in-out;
+  transition: top 0.2s ease-in-out;
+}
+
+.tooltip.active {
+  top: 0px
+}
+
+dl {
+  margin: 0px;
+  padding: 0px;
+}
+
+dt {
+  float: left;
+  clear: left;
+  width: 25px;
+  text-align: right;
+  font-weight: bold;
+}
+
+dd {
+  margin: 0 5px 0 45px;
+  padding: 0 0 0.5em 0;
 }
