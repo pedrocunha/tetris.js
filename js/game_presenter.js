@@ -4,6 +4,7 @@ function GamePresenter(game, canvas){
   this.context = this.canvas.getContext('2d');
   this.tetrominoPresenter = new TetrominoPresenter(this.context);
   this.timeout = null;
+  this.isPaused = false;
 }
 
 GamePresenter.prototype = {
@@ -31,28 +32,50 @@ GamePresenter.prototype = {
           this.tetrominoPresenter.draw(game.grid[i][j], j * TetrominoPresenter.BLOCK_SIZE, i * TetrominoPresenter.BLOCK_SIZE);
   },
 
+  pause: function(){
+    if( this.isPaused ) {
+      this.isPaused = false;
+      this._autoMoveDown();
+    }
+    else {
+      clearInterval(this.timeout);
+      this.isPaused = true;
+    }
+  },
+
+  areControlsDisabled: function(){
+    if(this.isPaused || this.game.isAnimating())
+      return true;
+
+    return false;
+  },
+
   enableControls: function(){
     var that = this;
     key('left', function(){
-      if (that.game.isAnimating() ) return false
+      if (that.areControlsDisabled()) return false
       that.game.moveLeft();
     });
 
     key('right', function(){
-      if (that.game.isAnimating() ) return false
+      if (that.areControlsDisabled()) return false
       that.game.moveRight();
     });
 
     key('down', function(){
-      if (that.game.isAnimating() ) return false
+      if (that.areControlsDisabled()) return false
       clearInterval(that.timeout);
       that.game.moveDown();
       that._autoMoveDown();
     });
 
     key('enter', function(){
-      if (that.game.isAnimating() ) return false
+      if (that.areControlsDisabled()) return false
       that.game.rotate();
+    });
+
+    key('p', function(){
+      that.pause();
     });
   },
 
