@@ -17,6 +17,15 @@ body {
   height: 600px;
 }
 
+p.author {
+  position: absolute;
+  bottom: -25px;
+  margin: 0;
+  padding: 0;
+  right: 0;
+  font-size: 13px;
+}
+
 .canvasContainer {
   width: inherit;
   height: inherit;
@@ -47,7 +56,7 @@ body {
 }
 
 .pause, .pause:visited {
-  background-color: #2DAEBF;
+  background-color: #DEDEDE;
 }
 
 .pause:active {
@@ -55,7 +64,7 @@ body {
 }
 
 .pause:hover, .pause.active{
-  background-color: #007d9a;
+  background-color: #CECECE;
 }
 
 .tooltip {
