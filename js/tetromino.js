@@ -73,13 +73,13 @@ Tetromino.prototype = {
 
 // Class methods
 Tetromino.all = [
-  new Tetromino([[0,0], [1,0], [2,0], [3, 0]], 'rgb(255, 173, 0)'), // xxxx
-  new Tetromino([[0,0], [0,1], [1,1], [2, 1]], 'rgb(0, 255, 214)'), // xoo/xxx
-  new Tetromino([[2,0], [0,1], [1,1], [2, 1]], 'rgb(0, 92, 255)'), // oox/xxx
-  new Tetromino([[0,0], [1,0], [0,1], [1, 1]], 'rgb(255, 0, 61)'), // xx/xx
-  new Tetromino([[1,0], [2,0], [0,1], [1, 1]], 'rgb(245, 255, 0)'), // oxx/xxo
-  new Tetromino([[1,0], [0,1], [1,1], [2, 1]], 'rgb(61, 255, 0)'), // oxo/xxx
-  new Tetromino([[0,0], [1,0], [1,1], [2, 1]], 'rgb(122, 255, 0)')  // xxo/oxx
+  new Tetromino([[0,0], [1,0], [2,0], [3, 0]], '#e33100'), // xxxx
+  new Tetromino([[0,0], [0,1], [1,1], [2, 1]], '#2daebf'), // xoo/xxx 
+  new Tetromino([[2,0], [0,1], [1,1], [2, 1]], '#FFC740'), // oox/xxx 
+  new Tetromino([[0,0], [1,0], [0,1], [1, 1]], '#FF6C00'), // xx/xx  orange
+  new Tetromino([[1,0], [2,0], [0,1], [1, 1]], '#00B64F'), // oxx/xxo green
+  new Tetromino([[1,0], [0,1], [1,1], [2, 1]], '#36BBCE'), // oxo/xxx blue
+  new Tetromino([[0,0], [1,0], [1,1], [2, 1]], '#FFEE40')  // xxo/oxx yellow
 ]
 
 Tetromino.random = function(){

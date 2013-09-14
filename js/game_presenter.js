@@ -18,7 +18,7 @@ GamePresenter.prototype = {
   },
 
   clear: function(){
-    this.context.fillStyle = "#000000";
+    this.context.fillStyle = "#FFFFFF";
     this.context.fillRect(0,0, GamePresenter.gameWidth, GamePresenter.gameHeight);
   },
 
@@ -77,10 +77,10 @@ GamePresenter.prototype = {
     $('a.pause').click(function(){
       $(this).toggleClass("active");
       $('.tooltip').toggleClass('active');
+      that.pause();
     })
 
     key('p', function(){
-      that.pause();
       $('a.pause').trigger('click');
     });
   },

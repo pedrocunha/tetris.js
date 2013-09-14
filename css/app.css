@@ -1,8 +1,5 @@
-* {
-}
-
 body {
-  background: black;
+  background: white;
   height: 600px;
   text-align: center;
   font-family: 'Roboto Slab', serif;
@@ -24,7 +21,7 @@ body {
   width: inherit;
   height: inherit;
   overflow: hidden;
-  border: 3px solid red;
+  border: 1px solid #CECECE;
   position: absolute;
 }
 
@@ -45,15 +42,12 @@ body {
   text-decoration: none;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
   text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-  border-bottom: 1px solid rgba(0,0,0,0.25);
   cursor: pointer;
 }
 
 .pause, .pause:visited {
-  background-color: #e33100;
+  background-color: #2DAEBF;
 }
 
 .pause:active {
@@ -61,11 +55,11 @@ body {
 }
 
 .pause:hover, .pause.active{
-  background-color: #872300;
+  background-color: #007d9a;
 }
 
 .tooltip {
-  color: white;
+  color: black;
   position: absolute;
   top: -240px;
   font-size: 14px;
@@ -74,7 +68,7 @@ body {
   text-align: left;
   padding-left: 30px;
   line-height: 40px;
-  background-color: black;
+  background-color: #FEFEFE;
   box-sizing: border-box;
   opacity: 0.9;
 
