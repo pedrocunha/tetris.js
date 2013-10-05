@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "jasmine-node": "*"
+  },
+  "scripts": {
+    "test": "jasmine-node spec"
+  }
+}
