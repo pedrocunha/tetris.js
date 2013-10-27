@@ -40,7 +40,7 @@ Game.prototype = {
 
   moveDown: function(){
     if (!this.canMoveDown())
-      return false
+      return false;
 
     // All is fine! We can move the tetromino down
     // Easiest algorithm is just to remove any references to
@@ -51,7 +51,7 @@ Game.prototype = {
     this.currentY = this.currentY + 1;
     this._placeCurrentTetromino();
 
-    return true
+    return true;
   },
 
   moveLeft: function(){
@@ -67,14 +67,14 @@ Game.prototype = {
     // Return as early as possible if block at edge of
     // grid
     if ( this.currentX == 0 )
-      return false
+      return false;
 
     // If block outside of grid on
     // top allow movement as long is still inside
     // the horizontal spaces
     if ( this.currentY < 0 && this.currentX > 0 ){
-      this.currentX = this.currentX - 1
-      return true
+      this.currentX = this.currentX - 1;
+      return true;
     }
 
     // Check first if blocks to the left are available
@@ -82,14 +82,14 @@ Game.prototype = {
       // Get first block filled in
       for ( w = 0; w < tetrominoWidth; ++w ){
         if(this.currentTetromino.grid[i][w] == 1 ){
-          firstXBlock = w
-          break
+          firstXBlock = w;
+          break;
         }
       }
 
-      nextXBlock = this.currentX + firstXBlock - 1
+      nextXBlock = this.currentX + firstXBlock - 1;
       if ( this.grid[j][nextXBlock] != null )
-        return false
+        return false;
     }
 
     // Clean block from the grid
@@ -99,7 +99,7 @@ Game.prototype = {
     this.currentX = this.currentX - 1
     this._placeCurrentTetromino();
 
-    return true
+    return true;
   },
 
   moveRight: function(){
@@ -115,40 +115,40 @@ Game.prototype = {
     // Return as early as possible if block at edge of
     // grid
     if ( tetrominoHeight <= this.currentY && this.currentX + tetrominoWidth - 1 == Game.HORIZONTAL_SPACES - 1)
-      return false
+      return false;
 
     // If block outside of grid on
     // top allow movement as long is still inside
     // the horizontal spaces
     if ( this.currentY < 0)
       if ( this.currentX + tetrominoWidth < Game.HORIZONTAL_SPACES ){
-        this.currentX = this.currentX + 1
-        return true
+        this.currentX = this.currentX + 1;
+        return true;
       }
       else 
-        return false
+        return false;
 
     // Check first if blocks to the right are available
     for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0 && j >= 0; --i, --j ){
       // Get last block filled in
       for ( w = 0; w < tetrominoWidth; ++w ){
         if(this.currentTetromino.grid[i][w] == 1 )
-          lastXBlock = w
+          lastXBlock = w;
       }
 
-      nextXBlock = lastXBlock + this.currentX + 1
+      nextXBlock = lastXBlock + this.currentX + 1;
       if ( this.grid[j][nextXBlock] != null || nextXBlock == Game.HORIZONTAL_SPACES)
-        return false
+        return false;
     }
 
     // Clean block from the grid
     this._removeCurrentTetromino();
 
     // Put back in
-    this.currentX = this.currentX + 1
+    this.currentX = this.currentX + 1;
     this._placeCurrentTetromino();
 
-    return true
+    return true;
   },
 
   start: function(options){
@@ -217,37 +217,37 @@ Game.prototype = {
         futureY      = null;
 
     if ( futureHeight > currHeight )
-      futureY = this.currentY + Math.floor(futureHeight/2)
+      futureY = this.currentY + Math.floor(futureHeight/2);
     else if ( futureHeight < currHeight )
-      futureY = this.currentY - Math.floor(currHeight/2)
+      futureY = this.currentY - Math.floor(currHeight/2);
 
     if ( futureWidth > currWidth )
-      futureX = this.currentX - Math.floor(futureWidth/2)
+      futureX = this.currentX - Math.floor(futureWidth/2);
     else if ( futureWidth < currWidth )
-      futureX = this.currentX + Math.floor(currWidth/2)
+      futureX = this.currentX + Math.floor(currWidth/2);
     
     // if futureX is less than 0
     // means the tetromino would be
     // drawn outside of the left bound
     if ( futureX < 0 )
-      return false
+      return false;
 
     // if futureX plus futureWidth is
     // higher than Game.HORIZONTAL_SPACES means
     // the tetromino would be drawn outside
     // of the right bound
     if ( futureX + futureWidth > Game.HORIZONTAL_SPACES )
-      return false
+      return false;
 
     var w = futureHeight;
     for (var i = futureY; i >= 0 && w > 0; --i, --w){
       for (var j = futureX; j < futureX + futureWidth; ++j){
 
         if(newGrid[w - 1][j - futureX] != 1)
-          continue
+          continue;
 
         if(this.grid[i][j] != null && this.grid[i][j] != this.currentTetromino)
-          return false
+          return false;
       }
     }
     
@@ -260,15 +260,15 @@ Game.prototype = {
 
     this._placeCurrentTetromino();
 
-    return true
+    return true;
   },
 
   // helper methods
   isAnimating: function(animating){
      if( animating == undefined )
-       return this.animating
+       return this.animating;
 
-     this.animating = animating
+     this.animating = animating;
   },
 
   canMoveDown: function(){
@@ -277,7 +277,7 @@ Game.prototype = {
         tetrominoWidth  = this.currentTetromino.width()
 
     if (this.currentY == (Game.VERTICAL_SPACES - 1))
-      return false
+      return false;
 
     for(i = this.currentX; i < this.currentX + tetrominoWidth; ++i){
       for(j = this.currentY + 1; j >= 0; --j){
@@ -285,15 +285,15 @@ Game.prototype = {
         // Edge case when outside
         // of the grid
         if(j - 1 > -1 && this.grid[j - 1][i] != this.currentTetromino )
-          continue
+          continue;
         else if(this.grid[j][i] == this.currentTetromino)
-          break
+          break;
         else if(this.grid[j][i] != null)
-          return false
+          return false;
       }
     }
      
-    return true
+    return true;
   },
 
 
@@ -305,8 +305,8 @@ Game.prototype = {
       for(var j = 0; j < Game.HORIZONTAL_SPACES; ++j){
         
         if(this.grid[i][j] == this.currentTetromino){
-          this.grid[i][j] = null
-          found = true
+          this.grid[i][j] = null;
+          found = true;
         }
       }
 
@@ -314,9 +314,9 @@ Game.prototype = {
       // of a particular tetromino means the next up
       // can't have either. So we break earlier
       if(!found)
-        break
+        break;
       else
-        found = false
+        found = false;
     }
   },
 
@@ -331,23 +331,23 @@ Game.prototype = {
           // currentY should be inclusive
           this.grid[updateY][this.currentX + j] = this.currentTetromino
       }
-      --updateY
+      --updateY;
 
       if ( updateY < 0 )
-        break
+        break;
 
     }
-    return true
+    return true;
   },
 
   _calculateCurrentX: function(){
     if(this.currentTetromino.width() % 2 == 0)
-      return (Game.HORIZONTAL_SPACES - this.currentTetromino.width())/2
+      return (Game.HORIZONTAL_SPACES - this.currentTetromino.width())/2;
     else
-      return Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width()) 
+      return Math.floor(Game.HORIZONTAL_SPACES / this.currentTetromino.width());
   }
 }
 
 
-Game.HORIZONTAL_SPACES = 10
-Game.VERTICAL_SPACES   = 20
+Game.HORIZONTAL_SPACES = 10;
+Game.VERTICAL_SPACES   = 20;
