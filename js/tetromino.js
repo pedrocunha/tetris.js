@@ -27,7 +27,7 @@ Tetromino.prototype = {
 
     for ( ; i >= 0; --i ) {
       for ( j = 0; j < this.grid[i].length; ++j ) {
-        if ( newGrid[j] === null ) newGrid[j] = [];
+        if ( newGrid[j] === undefined ) newGrid[j] = [];
         newGrid[j][this.grid.length - 1 - i] = this.grid[i][j];
       }
     }
