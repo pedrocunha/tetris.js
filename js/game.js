@@ -221,11 +221,15 @@ Game.prototype = {
       futureY = this.currentY + Math.floor(futureHeight/2);
     else if ( futureHeight < currHeight )
       futureY = this.currentY - Math.floor(currHeight/2);
+    else
+      futureY = this.currentY;
 
     if ( futureWidth > currWidth )
       futureX = this.currentX - Math.floor(futureWidth/2);
     else if ( futureWidth < currWidth )
       futureX = this.currentX + Math.floor(currWidth/2);
+    else
+      futureX = this.currentX;
     
     // if futureX is less than 0
     // means the tetromino would be
@@ -244,10 +248,10 @@ Game.prototype = {
     for (var i = futureY; i >= 0 && w > 0; --i, --w){
       for (var j = futureX; j < futureX + futureWidth; ++j){
 
-        if(newGrid[w - 1][j - futureX] != 1)
+        if(newGrid[w - 1][j - futureX] !== 1)
           continue;
 
-        if(this.grid[i][j] != null && this.grid[i][j] != this.currentTetromino)
+        if(this.grid[i][j] !== null && this.grid[i][j] !== this.currentTetromino)
           return false;
       }
     }
