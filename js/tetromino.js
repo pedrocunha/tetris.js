@@ -4,7 +4,7 @@ function Tetromino(coordinates, color){
   this.grid        = [];
 
   this._initializeGrid();
-}
+};
 
 Tetromino.prototype = {
 
@@ -13,11 +13,11 @@ Tetromino.prototype = {
   },
 
   width: function(){
-    return this.grid[0].length
+    return this.grid[0].length;
   },
 
   height: function(){
-    return this.grid.length
+    return this.grid.length;
   },
 
   rotateRight: function(commit){
@@ -26,8 +26,8 @@ Tetromino.prototype = {
         newGrid = [];
 
     for ( ; i >= 0; --i ) {
-      for ( var j = 0; j < this.grid[i].length; ++j ) {
-        if ( newGrid[j] == null ) newGrid[j] = [];
+      for ( j = 0; j < this.grid[i].length; ++j ) {
+        if ( newGrid[j] === undefined ) newGrid[j] = [];
         newGrid[j][this.grid.length - 1 - i] = this.grid[i][j];
       }
     }
@@ -43,7 +43,7 @@ Tetromino.prototype = {
         j        = 0
         point    = null,
         currentY = null,
-        maxX     = 0
+        maxX     = 0;
 
     // Fill 1s where there is
     // a block
@@ -52,24 +52,24 @@ Tetromino.prototype = {
       
       // when currentY changes we need
       // to introduce a new row
-      if( currentY != point[1] ){      
-        currentY = point[1]
-        this.grid[currentY] = []
+      if( currentY !== point[1] ){      
+        currentY = point[1];
+        this.grid[currentY] = [];
       }
 
       this.grid[currentY][point[0]] = 1;
 
       if(maxX < point[0])
-        maxX = point[0]
+        maxX = point[0];
     }
 
     // Fill 0s when there is no block
     for (i = 0; i < this.grid.length; ++i)
       for (j = 0; j < maxX + 1; ++j)
         if ( this.grid[i][j] != 1 )
-          this.grid[i][j] = 0
+          this.grid[i][j] = 0;
  },
-}
+};
 
 // Class methods
 Tetromino.all = [
@@ -80,8 +80,8 @@ Tetromino.all = [
   new Tetromino([[1,0], [2,0], [0,1], [1, 1]], '#00B64F'), // oxx/xxo green
   new Tetromino([[1,0], [0,1], [1,1], [2, 1]], '#36BBCE'), // oxo/xxx blue
   new Tetromino([[0,0], [1,0], [1,1], [2, 1]], '#FFEE40')  // xxo/oxx yellow
-]
+];
 
 Tetromino.random = function(){
   return Tetromino.all[_.random(Tetromino.all.length - 1)].clone();
-}
+};
