@@ -26,8 +26,8 @@ Tetromino.prototype = {
         newGrid = [];
 
     for ( ; i >= 0; --i ) {
-      for ( var j = 0; j < this.grid[i].length; ++j ) {
-        if ( newGrid[j] == null ) newGrid[j] = [];
+      for ( j = 0; j < this.grid[i].length; ++j ) {
+        if ( newGrid[j] === null ) newGrid[j] = [];
         newGrid[j][this.grid.length - 1 - i] = this.grid[i][j];
       }
     }
@@ -43,7 +43,7 @@ Tetromino.prototype = {
         j        = 0
         point    = null,
         currentY = null,
-        maxX     = 0
+        maxX     = 0;
 
     // Fill 1s where there is
     // a block
@@ -52,7 +52,7 @@ Tetromino.prototype = {
       
       // when currentY changes we need
       // to introduce a new row
-      if( currentY != point[1] ){      
+      if( currentY !== point[1] ){      
         currentY = point[1];
         this.grid[currentY] = [];
       }

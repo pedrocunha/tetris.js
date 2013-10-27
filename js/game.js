@@ -66,7 +66,7 @@ Game.prototype = {
     
     // Return as early as possible if block at edge of
     // grid
-    if ( this.currentX == 0 )
+    if ( this.currentX === 0 )
       return false;
 
     // If block outside of grid on
@@ -81,14 +81,14 @@ Game.prototype = {
     for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0 && j >= 0; --i, --j ){
       // Get first block filled in
       for ( w = 0; w < tetrominoWidth; ++w ){
-        if(this.currentTetromino.grid[i][w] == 1 ){
+        if(this.currentTetromino.grid[i][w] === 1 ){
           firstXBlock = w;
           break;
         }
       }
 
       nextXBlock = this.currentX + firstXBlock - 1;
-      if ( this.grid[j][nextXBlock] != null )
+      if ( this.grid[j][nextXBlock] !== null )
         return false;
     }
 
@@ -114,7 +114,7 @@ Game.prototype = {
     
     // Return as early as possible if block at edge of
     // grid
-    if ( tetrominoHeight <= this.currentY && this.currentX + tetrominoWidth - 1 == Game.HORIZONTAL_SPACES - 1)
+    if ( tetrominoHeight <= this.currentY && this.currentX + tetrominoWidth - 1 === Game.HORIZONTAL_SPACES - 1)
       return false;
 
     // If block outside of grid on
@@ -132,12 +132,12 @@ Game.prototype = {
     for ( i = tetrominoHeight - 1, j = this.currentY; i >= 0 && j >= 0; --i, --j ){
       // Get last block filled in
       for ( w = 0; w < tetrominoWidth; ++w ){
-        if(this.currentTetromino.grid[i][w] == 1 )
+        if(this.currentTetromino.grid[i][w] === 1 )
           lastXBlock = w;
       }
 
       nextXBlock = lastXBlock + this.currentX + 1;
-      if ( this.grid[j][nextXBlock] != null || nextXBlock == Game.HORIZONTAL_SPACES)
+      if ( this.grid[j][nextXBlock] !== null || nextXBlock === Game.HORIZONTAL_SPACES)
         return false;
     }
 
@@ -152,7 +152,7 @@ Game.prototype = {
   },
 
   start: function(options){
-    if ( options == undefined )
+    if ( options === undefined )
       options = {}
 
     this.currentTetromino = options.currentTetromino || Tetromino.random();
@@ -178,18 +178,19 @@ Game.prototype = {
       for (j = 0; j < this.grid[i].length; ++j ) {
         // If it's null we can skip this
         // row
-        if ( this.grid[i][j] == null  )
+        if ( this.grid[i][j] === null  )
           break
         // If last position is occupied
         // and it hasn't return from this
         // loop. this line is complete and
         // must be removed
-        else if ( this.grid[i][j] != null && j == this.grid[i].length - 1 ) {
+        else if ( this.grid[i][j] !== null && j === this.grid[i].length - 1 ) {
           this.removeRow(i);
 
           // Save one full grid iteration
           // if row removed it 0
-          if (i != 0) this.removeCompletedRows();
+          if (i !== 0) 
+            this.removeCompletedRows();
         }
       }
     }
