@@ -1,9 +1,9 @@
 # tetris.js [![Build Status](https://travis-ci.org/pedrocunha/tetris.js.png)](https://travis-ci.org/pedrocunha/tetris.js)
 IN THE BROWSER ROFLOL
 
-Playable [here](http://tetris-js.herokuapp.com/), if it is not accessible means no one played it for the last 19h :(
+Playable [here](http://tetris-js.herokuapp.com/) also if you want to play locally just open `index.html`
 
-If you want to play locally just open `index.html`
+The [motivation behind build this](https://speakerdeck.com/pedrocunha/building-tetris-dot-js).
 
 ### TODO
 - Responsive layout
