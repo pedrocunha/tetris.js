@@ -3,7 +3,7 @@ IN THE BROWSER ROFLOL
 
 Playable [here](http://tetris-js.herokuapp.com/) also if you want to play locally just open `index.html`
 
-The [motivation behind build this](https://speakerdeck.com/pedrocunha/building-tetris-dot-js).
+The [motivation behind building this](https://speakerdeck.com/pedrocunha/building-tetris-dot-js).
 
 ### TODO
 - Responsive layout
